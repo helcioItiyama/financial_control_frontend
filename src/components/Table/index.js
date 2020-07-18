@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import {TiArrowDownThick, TiArrowUpThick} from 'react-icons/ti';
 import { IconContext } from 'react-icons';
-import { Container, Row } from './styles';
+import { Container, Row, Icons } from './styles';
 import api from '../../services/api';
 
 function Table({ transactions, loadTransactions, handleOpen, handleModal }) {
@@ -58,22 +58,22 @@ function Table({ transactions, loadTransactions, handleOpen, handleModal }) {
           </td>
 
           <td>
-            {type === "+" ? (
-              <IconContext.Provider value={{color: 'green', size: '2rem'}}>
-               <TiArrowUpThick/>
-              </IconContext.Provider>
-            ) : (
-              <IconContext.Provider value={{color: 'red', size: '2rem'}}>
-                <TiArrowDownThick/>
-              </IconContext.Provider>
-              )} 
+            <Icons>
+              {type === "+" ? (
+                <TiArrowUpThick color='green'/>
+              ) : (
+                  <TiArrowDownThick color='red'/>
+                )} 
+            </Icons>
           </td>
           
           <td>{formatValue}</td>
          
           <td>
-            <button onClick={() => handleEdit(_id)}><MdEdit/></button> 
-            <button onClick={() => handleDelete(_id)}><MdDelete/></button>
+            <div>
+              <button onClick={() => handleEdit(_id)}><MdEdit/></button> 
+              <button onClick={() => handleDelete(_id)}><MdDelete/></button>
+            </div>
           </td>
         </Row>
       ))}

@@ -7,30 +7,71 @@ export const Container = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(231, 227, 227, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
+  background: #fff;
+  padding: 10px;
+
+  font-size: 1rem;
 
   form {
     background: #fff;
-    padding: 40px;
+    margin: 20px auto;
+    width: 280px;
 
     >div {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
 
       >h2 {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
       }
     }
 
     >section {
       border: 1px solid #000;
-      padding: 30px;
+      padding: 10px;
+    }
+  }
+
+  @media(min-width: 425px) {
+    form {
+      width: 320px;
+    }
+  }
+
+  @media(min-width: 768px) {
+    form {
+      width: 600px;
+
+      >div {
+        margin-bottom: 30px;
+      }
+    }
+  }
+
+  @media(min-width: 1024px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(231, 227, 227, 0.9);
+    font-size: 1.2rem;
+
+    form {
+      width: 500px;
+      padding: 40px;
+
+      >div {
+        margin-bottom: 30px;
+
+        >h2 {
+          font-size: 1.8rem;
+        }
+      }
+
+      >section {
+        padding: 30px;
+      }
     }
   }
 `;
@@ -38,7 +79,8 @@ export const Container = styled.div`
 export const SubmitButton = styled.button`
   background: ${props => props.disabled ? '#999999' : '#0f79af'};
   box-shadow: ${props => props.disabled ? '0 0 22px #777777 inset' : '0 0 22px #001a66 inset'};
-  padding: 8px 26px;
+  padding: 8px;
+  width: 280px;
   margin: 20px auto 0;
   display: block;
 
@@ -46,6 +88,20 @@ export const SubmitButton = styled.button`
       color: ${props => props.disabled ? '' : '#f2f4f6'};
       background: ${props => props.disabled ? '' : '#79b8f3'};
     }
+
+  @media(min-width: 425px) {
+    width: 320px;
+  }
+
+  @media(min-width: 768px) {
+    width: 600px;
+    margin-top: 30px;
+  }
+
+  @media(min-width: 1024px) {
+    width: initial;
+    padding: 8px 26px;
+  }
 `;
 
 export const TextInput = styled.div`
@@ -85,7 +141,7 @@ export const InputRadio = styled.div`
 `;
 
 export const Label = styled.label`
-  font-size: 1.4rem;
+  font-size: 1rem;
 
   &:first-child {
     color: ${props => props.color ? "#999999" : "green" }
@@ -98,11 +154,20 @@ export const Label = styled.label`
   >input {
   margin-right: 10px;
   }
+
+  @media(min-width: 1024px) {
+    font-size: 1.4rem;
+  }
 `;
 
 export const DateInput = styled.div`
-  display: flex;
-  align-items: center;
+
+  > label {
+    input {
+      width: 260px;
+      margin-bottom: 20px;
+    }
+  }
 
   div {
     display: flex;
@@ -112,13 +177,14 @@ export const DateInput = styled.div`
       color: #999999;
       display: inline-block;
       margin-bottom: 10px;
+
     }
 
     input {
       display: block;
       border: none;
       border-bottom: 1px solid #999999;
-      margin-right: 20px;
+      margin-bottom: 20px;
 
       &:focus {
         border-bottom: 1px solid #0f79af;
@@ -126,6 +192,25 @@ export const DateInput = styled.div`
         +label {
           color: #0f79af;
         }
+      }
+    }
+  }
+
+  @media(min-width: 1024px) {
+    display: flex;
+    align-items: center;
+
+    > label {
+      input {
+        width: 170px;
+        margin-bottom: 20px;
+      }
+    }
+    
+    div {
+      input {
+        width: 170px;
+        margin-right: 20px;
       }
     }
   }

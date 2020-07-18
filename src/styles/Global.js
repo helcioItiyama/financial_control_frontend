@@ -10,8 +10,6 @@ export default createGlobalStyle`
   }
   body {
     -webkit-font-smoothing: antialiased;
-    height: 100vh;
-    width: 100%;
     background: #0f171e;
   }
   body, input, button {

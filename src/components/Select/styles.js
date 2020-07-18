@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 282px;
+  width: 280px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -9,7 +9,8 @@ export const Container = styled.div`
   >button {
     background: #0f79af;
     box-shadow: 0 0 22px #001a66 inset;
-    padding: 8px 26px;
+    padding: 4px 8px;
+  
 
     &:hover {
       color: #f2f4f6;
@@ -18,7 +19,39 @@ export const Container = styled.div`
   }
 
   select {
-    padding: 12px;
+    padding: 6px 0px 6px 60px;
     width:200px;
   }
+
+  @media(min-width: 375px) {
+    width: 340px;
+
+    select {
+      width: 260px;
+      padding: 6px 0px 6px 90px;
+    }
+  }
+
+  @media(min-width: 425px) {
+    width: 380px;
+
+    select {
+      width: 300px;
+      padding: 6px 0px 6px 110px;
+    }
+  }
+
+  @media(min-width: 1024px) {
+    width: 380px;
+    margin-top: 30px;
+
+    >button {
+      padding: 8px 26px;
+    }
+
+    select {
+      width: 300px;
+      padding: 12px;
+    }
+  } 
 `;

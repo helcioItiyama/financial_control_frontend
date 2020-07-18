@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
-  margin-top: 18vh;
+  margin-top: 8vh;
   display: flex;
   flex-direction: column;
   align-items: center;

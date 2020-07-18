@@ -182,7 +182,7 @@ export default function App() {
           edit={editTransaction}
           loadTransactions={loadTransactions}  
         />
-      )}
+       )}
     </Container>
   );
 }
