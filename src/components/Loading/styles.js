@@ -26,10 +26,12 @@ const filling = keyframes`
 
 export const Money = styled.p`
   font-size: 4rem;
-  border: 8px solid green;
+  border: 8px solid black;
+  box-shadow: 1px 1px 8px green;
   border-radius: 50%;
   padding: 0px 21px;
-  color: green;
+  color: black;
+  text-shadow: 1px 1px 8px green;
   animation: ${filling} 1s linear;
 
 `;

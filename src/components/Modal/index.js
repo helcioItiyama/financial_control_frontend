@@ -1,50 +1,66 @@
 import React from 'react';
+import { IoIosCloseCircle } from 'react-icons/io';
 
-// import { Container } from './styles';
+import { Container, DateInput, InputRadio, TextInput } from './styles';
 
-function Modal() {
+function Modal({handleCloseModal}) {
   return (
-    <form>
+    <Container>
+      <form>
         <div>
           <h2>Edição de lançamento</h2>
-          <p>close</p>
+          <IoIosCloseCircle 
+            as="button" 
+            size="1.5rem" 
+            color="red" 
+            style={{cursor: 'pointer'}}
+            onClick={handleCloseModal}
+          />
         </div>
 
-        <div>
-          <label htmlFor="type1">
-            <input type="radio" id="type1" name="balance" value="income"/>
-            Receita
-          </label>
-
-          <label htmlFor="type2">
-            <input type="radio" id="type2" name="balance" value="outcome"/>
-            Despesa
-          </label>
-          
-          <label htmlFor="description">
-            Descrição:
-            <input type="text" id="description" name="description" value=""/>
-          </label>
-
-          <label htmlFor="category">
-            Categoria:
-            <input type="text" id="category" name="category" value=""/>
-          </label>
-          
-          <div>
-            <label htmlFor="value">
-              Valor:
-              <input type="number" id="value" name="value" value="" min="0"/>
+        <section>
+          <InputRadio>
+            <label htmlFor="type1">
+              <input type="radio" checked id="type1" name="balance" value="income"/>
+              Receita
             </label>
+
+            <label htmlFor="type2">
+              <input type="radio" id="type2" name="balance" value="outcome"/>
+              Despesa
+            </label>
+          </InputRadio>
+
+          <TextInput>
+            <div>
+              <input type="text" id="description" name="description" value=""/>
+              <label htmlFor="description"> Descrição:</label>
+            </div>
+                
+            <div>
+              <input type="text" id="category" name="category" value=""/>
+              <label htmlFor="category">Categoria:</label> 
+            </div>
+          </TextInput>
+          
+         
+          
+          <DateInput>
+            <div>
+              <input type="number" id="value" name="value" value="" min="0"/>
+              <label htmlFor="value">Valor:</label>  
+            </div>
 
             <label htmlFor="date">
+              <br/>
               <input name="yearMonthDay" id="date" value="" type="date"/>
             </label>
-          </div>
-        </div>
+          </DateInput>
+        </section>
 
         <button type="submit">Salvar</button>
       </form>
+    </Container>
   );
 }
 

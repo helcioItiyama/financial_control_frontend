@@ -3,6 +3,8 @@ import Select from '../components/Select';
 import Details from '../components/Details';
 import Table from '../components/Table';
 import Loading from '../components/Loading';
+import Input from '../components/Input';
+import Modal from '../components/Modal';
 import api from '../services/api';
 import { formatPrice, formatDate , actualMonth, formatNumber } from '../utils/format';
 import { Container, Message } from './styles';
@@ -70,11 +72,18 @@ export default function App() {
   const buttonToggle = (buttonType) => {
     setIsLoading(true)
     const index = years.findIndex(year => year.date === date);
+
     if(buttonType === 'next') {
-      const nextIndex = years[index + 1].date;
+      const nextIndex = years[index + 1]?.date;
+      if(!nextIndex) {
+        return;
+      }
       setDate(nextIndex);
     } else if (buttonType === 'back') {
-      const nextIndex = years[index - 1].date;
+      const nextIndex = years[index - 1]?.date;
+      if(!nextIndex) {
+        return;
+      }
       setDate(nextIndex)
     }
   };
@@ -85,6 +94,10 @@ export default function App() {
     const filteredWords = transactions.filter(transaction => 
       transaction.description.toLowerCase().includes(words.toLowerCase()));
     setFilteredTransactions(filteredWords);
+  };
+
+  const handleAddTransaction = () => {
+
   };
 
   return (
@@ -98,11 +111,12 @@ export default function App() {
      
       <Details transactionDetails={transactionDetails}/>
 
-      <section>
-        <button>+ NOVO LANÇAMENTO</button>
-
-        <input ref={inputRef} type="text" placeholder="Filtro" onChange={handleFilter} value={filter} />
-      </section>
+      <Input 
+        onRef={inputRef}
+        handleFilter={handleFilter}
+        filter={filter}
+        handleAddTransaction={handleAddTransaction}
+      />
 
       {isLoading ? (
         <Loading />
@@ -121,6 +135,7 @@ export default function App() {
           )
         )
       }
+      <Modal/>
     </Container>
   );
 }
