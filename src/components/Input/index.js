@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Container } from './styles';
 
@@ -24,3 +25,10 @@ function Input({onRef, handleFilter, filter, handleAddTransaction}) {
 }
 
 export default Input;
+
+Input.propTypes = {
+  onRef: PropTypes.object.isRequired, 
+  handleFilter: PropTypes.func.isRequired, 
+  filter: PropTypes.string.isRequired, 
+  handleAddTransaction: PropTypes.func.isRequired,
+}

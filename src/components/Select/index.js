@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { GoTriangleLeft, GoTriangleRight } from 'react-icons/go';
 import { Container } from './styles';
 
@@ -30,3 +31,10 @@ function Select({years, onHandleChange, onButtonToggle, currentDate}) {
 }
 
 export default Select;
+
+Select.propTypes = {
+  years: PropTypes.object.isRequired, 
+  onHandleChange: PropTypes.func.isRequired, 
+  onButtonToggle: PropTypes.func.isRequired, 
+  currentDate: PropTypes.string.isRequired,
+}

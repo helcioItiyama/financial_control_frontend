@@ -17,8 +17,21 @@ export const formatNumber = (number) => {
 }
 
 export const actualMonth = () => {
-  const today = new Date();
-  const thisYear = today.getFullYear();
-  const thisMonth = formatNumber(today.getMonth() + 1);
-  return `${thisYear}-${thisMonth}`;
+  const now = new Date();
+  const today = formatNumber(now.getDate());
+  const thisYear = now.getFullYear();
+  const thisMonth = formatNumber(now.getMonth() + 1);
+  return {
+    today: `${thisYear}-${thisMonth}-${today}`,
+    thisDate: `${thisYear}-${thisMonth}`
+  }
+}
+
+export const formatLetter = (word) => {
+  return word.replace(/[áàãâää]/ig, "a")
+      .replace(/[éèêë]/ig, "e")
+      .replace(/[íìîï]/ig, "i")
+      .replace(/[óòôõö]/ig, "o")
+      .replace(/[úùûü]/ig, "u")
+      .toLowerCase();
 }

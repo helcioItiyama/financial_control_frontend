@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Container, Span  } from './styles';
 
@@ -15,3 +16,7 @@ function Details({transactionDetails}) {
 }
 
 export default Details;
+
+Details.propTypes = {
+  transactionDetails: PropTypes.object.isRequired,
+}

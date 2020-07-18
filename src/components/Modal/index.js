@@ -1,67 +1,181 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import { IoIosCloseCircle } from 'react-icons/io';
+import { actualMonth } from '../../utils/format';
+import { Container, DateInput, InputRadio, TextInput, SubmitButton, Label } from './styles';
+import api from '../../services/api';
 
-import { Container, DateInput, InputRadio, TextInput } from './styles';
+function Modal({handleClose, edit, loadTransactions, onRef}) {
+  const today = useMemo(() => {
+    return actualMonth().today;
+  }, []);
+  
+  const {
+    _id: id,
+    description: editDescription, 
+    category: editCategory, 
+    value: editValue, 
+    type: editType,
+    yearMonthDay: editYearMonthDay
+  } = edit;
 
-function Modal({handleCloseModal}) {
+  const [description, setDescription] = useState(editDescription || '');
+  const [category, setCategory] = useState(editCategory || '');
+  const [value, setValue] = useState(editValue || 0);
+  const [yearMonthDay, setYearMonthDay] = useState(editYearMonthDay || today);
+  const [type, setType] = useState(editType ||'+');
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      if(id) {
+        await api.put(`/api/transaction/${id}`, {
+          value,
+          description,
+          category,
+          yearMonthDay,
+          type,
+        });
+        toast.success("Transação editada com sucesso!")
+  
+      } else {
+        await api.post('/api/transaction', {
+          value,
+          description,
+          category,
+          yearMonthDay,
+          type,
+        });
+        toast.success("Transação cadastrada com sucesso!")
+      }
+      handleClose();
+      loadTransactions();
+     
+    } catch(err) {
+      if(id) {
+        toast.error("Não foi possível editar a transação");
+      } else {
+        toast.error("Não foi possível cadastrar a transação");
+      }
+    }
+  };
+
   return (
     <Container>
-      <form>
+      <form onSubmit={handleSubmit} ref={onRef}>
         <div>
-          <h2>Edição de lançamento</h2>
+          {id ? (
+            <h2>Edição de lançamento</h2>
+          ) : (
+            <h2>Inclusão de lançamento</h2>
+          )}
           <IoIosCloseCircle 
             as="button" 
             size="1.5rem" 
             color="red" 
             style={{cursor: 'pointer'}}
-            onClick={handleCloseModal}
+            onClick={() => handleClose()}
           />
         </div>
 
         <section>
-          <InputRadio>
-            <label htmlFor="type1">
-              <input type="radio" checked id="type1" name="balance" value="income"/>
+          <InputRadio >
+            <Label htmlFor="+" color={id ? true : false}>
+              <input 
+                disabled={id ? true : false}
+                type="radio" 
+                checked={type === '+'}
+                onChange={(event) => setType(event.target.id)}
+                id="+" 
+                name="balance" 
+                value="income"
+              />
               Receita
-            </label>
+            </Label>
 
-            <label htmlFor="type2">
-              <input type="radio" id="type2" name="balance" value="outcome"/>
+            <Label htmlFor="-" color={id ? true: false}>
+              <input 
+                disabled={id ? true : false}
+                type="radio"
+                checked={type === '-'}
+                onChange={(event) => setType(event.target.id)}
+                id="-" 
+                name="balance" 
+                value="outcome"
+              />
               Despesa
-            </label>
+            </Label>
           </InputRadio>
 
           <TextInput>
             <div>
-              <input type="text" id="description" name="description" value=""/>
+              <input 
+                type="text" 
+                id="description" 
+                name="description"
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
+              />
               <label htmlFor="description"> Descrição:</label>
             </div>
                 
             <div>
-              <input type="text" id="category" name="category" value=""/>
+              <input 
+                type="text" 
+                id="category" 
+                name="category"
+                value={category}
+                onChange={(event) => setCategory(event.target.value)}
+              />
               <label htmlFor="category">Categoria:</label> 
             </div>
           </TextInput>
-          
-         
-          
+     
           <DateInput>
             <div>
-              <input type="number" id="value" name="value" value="" min="0"/>
+              <input 
+                type="number" 
+                id="value" 
+                name="value" 
+                value={value} 
+                onChange={(event) => setValue(event.target.value)}
+                min="0"
+              />
               <label htmlFor="value">Valor:</label>  
             </div>
 
             <label htmlFor="date">
               <br/>
-              <input name="yearMonthDay" id="date" value="" type="date"/>
+              <input 
+                name="yearMonthDay" 
+                id="date" 
+                value={yearMonthDay} 
+                onChange={(event) => setYearMonthDay(event.target.value)}
+                type="date"
+              />
             </label>
           </DateInput>
         </section>
-
-        <button type="submit">Salvar</button>
+        
+        <SubmitButton 
+          disabled={(description && category && value) ? false : true} 
+          type="submit"
+        >
+          Salvar
+        </SubmitButton>
+          
       </form>
     </Container>
   );
 }
 
 export default Modal;
+
+Modal.propTypes = {
+  handleClose: PropTypes.func.isRequired, 
+  edit: PropTypes.object.isRequired, 
+  loadTransactions: PropTypes.func.isRequired, 
+  onRef: PropTypes.object.isRequired
+}

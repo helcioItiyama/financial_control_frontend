@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef} from 'react';
+import { toast } from 'react-toastify';
 import Select from '../components/Select';
 import Details from '../components/Details';
 import Table from '../components/Table';
@@ -6,14 +7,16 @@ import Loading from '../components/Loading';
 import Input from '../components/Input';
 import Modal from '../components/Modal';
 import api from '../services/api';
-import { formatPrice, formatDate , actualMonth, formatNumber } from '../utils/format';
+import { useOnClickOutside } from '../utils/hooks';
+import { formatPrice, formatLetter, formatDate , actualMonth, formatNumber } from '../utils/format';
 import { Container, Message } from './styles';
 
 export default function App() {
   const inputRef = useRef();
+  const modalRef = useRef()
   
   const today = useMemo(() => {
-    return actualMonth()
+    return actualMonth().thisDate;
   }, []
   )
   const [date, setDate] = useState(today);
@@ -22,32 +25,38 @@ export default function App() {
   const [years, setYears] = useState([]);
   const [filter, setFilter] = useState('')
   const [filteredTransactions, setFilteredTransactions] = useState([]);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
+  const [isModal, setIsModal] = useState(false);
+  const [editTransaction, setEditTransaction] = useState({})
 
   useEffect(() => {
     async function uploadDates() {
-      const { data } = await api.get("/api/transaction/years");
-      const formatdata = data.map(year => ({date: year, formatDate: formatDate(year)}))
-      setYears(formatdata);
+      try {
+        const { data } = await api.get("/api/transaction/years");
+        const formatdata = data.map(year => ({date: year, formatDate: formatDate(year)}))
+        setYears(formatdata);
+      } catch(err) {
+        toast.error("Não foi possível carregar os dados")
+      }
     }
     uploadDates();
   }, [])
 
-  useEffect(() => {
-    async function loadTransactions() {
+  async function loadTransactions() {
+    try {
       const { data } = await api.get("/api/transaction", {
         params: {period: `${date}`}
       });
-
+      
       const formatData = data.findTransactions.map(transaction => {
         return {
-          ...transaction,
-          value: formatPrice(transaction.value),
-          day: formatNumber(transaction.day),
-          month: formatNumber(transaction.month),
-        }
-      });
-
+            ...transaction,
+            formatValue: formatPrice(transaction.value),
+            day: formatNumber(transaction.day),
+            month: formatNumber(transaction.month),
+          }
+        });
+  
       const details = {
         income: formatPrice(data.income),
         outcome: formatPrice(data.outcome),
@@ -55,13 +64,19 @@ export default function App() {
         transactionNumber: data.transactionNumber,
         formattedBalance: formatPrice(data.balance)
       }
-
+      
       setTransactions(formatData);
       setTransactionDetails(details);
       setIsLoading(false);
       inputRef.current.focus();
+    } catch(err) {
+      toast.error("Não foi possível carregar conteúdo")
     }
+  } 
+
+  useEffect(() => {
     loadTransactions();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date]);
 
   const handleSelect = (event) => {
@@ -73,13 +88,13 @@ export default function App() {
     setIsLoading(true)
     const index = years.findIndex(year => year.date === date);
 
-    if(buttonType === 'next') {
+    if(buttonType === 'back') {
       const nextIndex = years[index + 1]?.date;
       if(!nextIndex) {
         return;
       }
       setDate(nextIndex);
-    } else if (buttonType === 'back') {
+    } else if (buttonType === 'next') {
       const nextIndex = years[index - 1]?.date;
       if(!nextIndex) {
         return;
@@ -92,13 +107,27 @@ export default function App() {
     const words = event.target.value;
     setFilter(event.target.value);
     const filteredWords = transactions.filter(transaction => 
-      transaction.description.toLowerCase().includes(words.toLowerCase()));
+      formatLetter(transaction.description).includes(formatLetter(words)));
     setFilteredTransactions(filteredWords);
   };
 
-  const handleAddTransaction = () => {
-
+  const handleOpen = () => {
+    setIsModal(true);
+    setEditTransaction({})
   };
+
+  const handleClose = () => {
+    setIsModal(false);
+  }
+
+  const handleModal = (id) => {
+    const findTransaction = transactions.find(transaction => 
+      transaction._id === id
+    );
+    setEditTransaction(findTransaction);
+  }
+
+  useOnClickOutside(modalRef, () => isModal && setIsModal(false));
 
   return (
     <Container>
@@ -115,7 +144,7 @@ export default function App() {
         onRef={inputRef}
         handleFilter={handleFilter}
         filter={filter}
-        handleAddTransaction={handleAddTransaction}
+        handleAddTransaction={handleOpen}
       />
 
       {isLoading ? (
@@ -128,14 +157,32 @@ export default function App() {
                   <span role="img" aria-label="sad face">😢</span>
                 </Message>
               ) : (
-                <Table transactions={filteredTransactions}/>
+                <Table 
+                  transactions={filteredTransactions} 
+                  loadTransactions={loadTransactions}
+                  handleOpen={handleOpen}
+                  handleModal={handleModal}
+                />
               )
           :(
-            <Table transactions={transactions}/>
+            <Table 
+              transactions={transactions}
+              loadTransactions={loadTransactions}
+              handleOpen={handleOpen}
+              handleModal={handleModal}
+            />
           )
         )
       }
-      <Modal/>
+
+      {isModal && (
+        <Modal 
+          onRef={modalRef}
+          handleClose={handleClose} 
+          edit={editTransaction}
+          loadTransactions={loadTransactions}  
+        />
+      )}
     </Container>
   );
 }

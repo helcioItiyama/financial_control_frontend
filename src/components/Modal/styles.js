@@ -26,15 +26,6 @@ export const Container = styled.div`
       >h2 {
         font-size: 1.8rem;
       }
-
-    }
-
-    >button {
-      background: #0f79af;
-      box-shadow: 0 0 22px #001a66 inset;
-      padding: 8px 26px;
-      margin: 20px auto 0;
-      display: block;
     }
 
     >section {
@@ -42,6 +33,19 @@ export const Container = styled.div`
       padding: 30px;
     }
   }
+`;
+
+export const SubmitButton = styled.button`
+  background: ${props => props.disabled ? '#999999' : '#0f79af'};
+  box-shadow: ${props => props.disabled ? '0 0 22px #777777 inset' : '0 0 22px #001a66 inset'};
+  padding: 8px 26px;
+  margin: 20px auto 0;
+  display: block;
+
+  &:hover {
+      color: ${props => props.disabled ? '' : '#f2f4f6'};
+      background: ${props => props.disabled ? '' : '#79b8f3'};
+    }
 `;
 
 export const TextInput = styled.div`
@@ -78,20 +82,21 @@ export const InputRadio = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 40px;
+`;
 
-  > label {
-    font-size: 1.4rem;
+export const Label = styled.label`
+  font-size: 1.4rem;
 
-    &:first-child {
-      color: green;
-    }
+  &:first-child {
+    color: ${props => props.color ? "#999999" : "green" }
+  }
 
-    &:last-child {
-      color: red;
-    }
-    > input {
-      margin-right: 10px;
-    }
+  &:last-child {
+    color: ${props => props.color ?  "#999999" : "red" }
+  }
+
+  >input {
+  margin-right: 10px;
   }
 `;
 

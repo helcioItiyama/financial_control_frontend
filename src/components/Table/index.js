@@ -1,10 +1,33 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react';
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import {TiArrowDownThick, TiArrowUpThick} from 'react-icons/ti';
 import { IconContext } from 'react-icons';
 import { Container, Row } from './styles';
+import api from '../../services/api';
 
-function Table({ transactions }) {
+function Table({ transactions, loadTransactions, handleOpen, handleModal }) {
+  const handleDelete = async (id) => {
+    const confirmation = confirm('Você deseja apagar transação?');
+
+    try {
+      if(confirmation) {
+        await api.delete(`/api/transaction/${id}`);
+        loadTransactions();
+        toast.success("Transação apagada com sucesso!")
+      }
+    } catch(err) {
+      toast.error("Não foi possível cancelar a transação");
+    }
+  } 
+
+  const handleEdit = async (id) => {
+    handleOpen();
+    handleModal(id);
+  }
+
   return (
     <Container>
       <thead>
@@ -22,7 +45,7 @@ function Table({ transactions }) {
           _id, 
           category, 
           description, 
-          value, 
+          formatValue, 
           day, 
           month,
           type
@@ -46,11 +69,11 @@ function Table({ transactions }) {
               )} 
           </td>
           
-          <td>{value}</td>
+          <td>{formatValue}</td>
          
           <td>
-            <button><MdEdit/></button> 
-            <button><MdDelete/></button>
+            <button onClick={() => handleEdit(_id)}><MdEdit/></button> 
+            <button onClick={() => handleDelete(_id)}><MdDelete/></button>
           </td>
         </Row>
       ))}
@@ -60,3 +83,10 @@ function Table({ transactions }) {
 }
 
 export default Table;
+
+Table.propTypes = {
+  transactions: PropTypes.object.isRequired, 
+  loadTransactions: PropTypes.func.isRequired, 
+  handleOpen: PropTypes.func.isRequired, 
+  handleModal: PropTypes.func.isRequired, 
+}
