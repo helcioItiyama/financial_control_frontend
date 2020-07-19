@@ -19,7 +19,7 @@ export const Container = styled.div`
   }
 
   select {
-    padding: 16px 0px 16px 60px;
+    padding: 16px 0px 16px 50px;
     width:200px;
   }
 

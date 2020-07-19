@@ -12,7 +12,6 @@ import { formatPrice, formatLetter, formatDate , actualMonth, formatNumber } fro
 import { Container, Message } from './styles';
 
 export default function App() {
-  const inputRef = useRef();
   const modalRef = useRef()
   
   const today = useMemo(() => {
@@ -68,7 +67,6 @@ export default function App() {
       setTransactions(formatData);
       setTransactionDetails(details);
       setIsLoading(false);
-      inputRef.current.focus();
     } catch(err) {
       toast.error("Não foi possível carregar conteúdo")
     }
@@ -141,7 +139,6 @@ export default function App() {
       <Details transactionDetails={transactionDetails}/>
 
       <Input 
-        onRef={inputRef}
         handleFilter={handleFilter}
         filter={filter}
         handleAddTransaction={handleOpen}

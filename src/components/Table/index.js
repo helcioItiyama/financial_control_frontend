@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import {TiArrowDownThick, TiArrowUpThick} from 'react-icons/ti';
-import { IconContext } from 'react-icons';
 import { Container, Row, Icons } from './styles';
 import api from '../../services/api';
 
