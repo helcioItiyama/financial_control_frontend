@@ -172,14 +172,14 @@ export default function App() {
         )
       }
 
-      {/* {isModal && ( */}
+      {isModal && (
         <Modal 
           onRef={modalRef}
           handleClose={handleClose} 
           edit={editTransaction}
           loadTransactions={loadTransactions}  
         />
-       {/* )} */}
+      )}
     </Container>
   );
 }

@@ -81,8 +81,9 @@ export const SubmitButton = styled.button`
   box-shadow: ${props => props.disabled ? '0 0 22px #777777 inset' : '0 0 22px #001a66 inset'};
   padding: 16px 8px;
   width: 280px;
-  margin: 20px auto 0;
+  margin: 40px auto 0;
   display: block;
+  font-size: 1.2rem;
 
   &:hover {
       color: ${props => props.disabled ? '' : '#f2f4f6'};
