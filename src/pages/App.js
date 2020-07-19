@@ -22,8 +22,7 @@ export default function App() {
   const [transactions, setTransactions] = useState([]);
   const [transactionDetails, setTransactionDetails] = useState([]);
   const [years, setYears] = useState([]);
-  const [filter, setFilter] = useState('')
-  const [filteredTransactions, setFilteredTransactions] = useState([]);
+  const [filter, setFilter] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isModal, setIsModal] = useState(false);
   const [editTransaction, setEditTransaction] = useState({})
@@ -41,11 +40,16 @@ export default function App() {
     uploadDates();
   }, [])
 
-  async function loadTransactions() {
+  async function loadTransactions(filter) {
     try {
+      let query = null
+      if(filter) {
+        query = {period: `${date}`, filter: `${filter}`}
+      } else {
+        query = {period: `${date}`}
+      }
       const { data } = await api.get("/api/transaction", {
-        params: {period: `${date}`}
-      });
+        params: query }); 
       
       const formatData = data.findTransactions.map(transaction => {
         return {
@@ -103,10 +107,9 @@ export default function App() {
 
   const handleFilter = (event) => {
     const words = event.target.value;
-    setFilter(event.target.value);
-    const filteredWords = transactions.filter(transaction => 
-      formatLetter(transaction.description).includes(formatLetter(words)));
-    setFilteredTransactions(filteredWords);
+    setFilter(words);
+    const formattedWord = formatLetter(words)
+    loadTransactions(formattedWord);
   };
 
   const handleOpen = () => {
@@ -144,24 +147,17 @@ export default function App() {
         handleAddTransaction={handleOpen}
       />
 
-      {isLoading ? (
+      {isLoading 
+      ? (
         <Loading />
-        ) : (
-          filter
-          ? filteredTransactions.length === 0 
-            ? (
-                <Message>Busca não encontrada 
-                  <span role="img" aria-label="sad face">😢</span>
-                </Message>
-              ) : (
-                <Table 
-                  transactions={filteredTransactions} 
-                  loadTransactions={loadTransactions}
-                  handleOpen={handleOpen}
-                  handleModal={handleModal}
-                />
-              )
-          :(
+        )
+      : filter && transactions.length === 0 
+        ? (
+          <Message>Busca não encontrada 
+            <span role="img" aria-label="sad face">😢</span>
+          </Message>
+          ) 
+        : (
             <Table 
               transactions={transactions}
               loadTransactions={loadTransactions}
@@ -169,7 +165,6 @@ export default function App() {
               handleModal={handleModal}
             />
           )
-        )
       }
 
       {isModal && (

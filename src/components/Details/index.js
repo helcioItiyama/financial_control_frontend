@@ -18,5 +18,5 @@ function Details({transactionDetails}) {
 export default Details;
 
 Details.propTypes = {
-  transactionDetails: PropTypes.object.isRequired,
+  transactionDetails: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 }

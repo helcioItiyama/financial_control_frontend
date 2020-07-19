@@ -84,7 +84,7 @@ function Table({ transactions, loadTransactions, handleOpen, handleModal }) {
 export default Table;
 
 Table.propTypes = {
-  transactions: PropTypes.object.isRequired, 
+  transactions: PropTypes.array.isRequired, 
   loadTransactions: PropTypes.func.isRequired, 
   handleOpen: PropTypes.func.isRequired, 
   handleModal: PropTypes.func.isRequired, 

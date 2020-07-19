@@ -33,7 +33,7 @@ function Select({years, onHandleChange, onButtonToggle, currentDate}) {
 export default Select;
 
 Select.propTypes = {
-  years: PropTypes.object.isRequired, 
+  years: PropTypes.array.isRequired, 
   onHandleChange: PropTypes.func.isRequired, 
   onButtonToggle: PropTypes.func.isRequired, 
   currentDate: PropTypes.string.isRequired,

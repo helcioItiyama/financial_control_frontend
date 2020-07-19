@@ -3,18 +3,18 @@ export const formatPrice = (number) => {
     style: 'currency',
     currency: 'BRL'
   }).format(number)
-}
+};
 
 export const formatDate = (date) => {
   const [year, month] = date.split('-');
   const monthArray = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
   const chooseDate = `${monthArray[Number(month) - 1]} / ${year}`
   return chooseDate;
-}
+};
 
 export const formatNumber = (number) => {
   return number.toString().padStart(2, '0');
-}
+};
 
 export const actualMonth = () => {
   const now = new Date();
@@ -25,7 +25,7 @@ export const actualMonth = () => {
     today: `${thisYear}-${thisMonth}-${today}`,
     thisDate: `${thisYear}-${thisMonth}`
   }
-}
+};
 
 export const formatLetter = (word) => {
   return word.replace(/[áàãâää]/ig, "a")
@@ -33,5 +33,7 @@ export const formatLetter = (word) => {
       .replace(/[íìîï]/ig, "i")
       .replace(/[óòôõö]/ig, "o")
       .replace(/[úùûü]/ig, "u")
+      .replace(/[ç]/ig, "c")
+      .replace(/[ñ]/ig, "n")
       .toLowerCase();
-}
+};

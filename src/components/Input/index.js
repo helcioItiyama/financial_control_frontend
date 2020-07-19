@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Container } from './styles';
 
-function Input({onRef, handleFilter, filter, handleAddTransaction}) {
+function Input({handleFilter, filter, handleAddTransaction}) {
   return(
     <Container>
         <button 
@@ -14,7 +14,6 @@ function Input({onRef, handleFilter, filter, handleAddTransaction}) {
         </button>
 
         <input 
-          ref={onRef} 
           type="text" 
           placeholder="Filtro" 
           onChange={handleFilter} 
@@ -27,7 +26,6 @@ function Input({onRef, handleFilter, filter, handleAddTransaction}) {
 export default Input;
 
 Input.propTypes = {
-  onRef: PropTypes.object.isRequired, 
   handleFilter: PropTypes.func.isRequired, 
   filter: PropTypes.string.isRequired, 
   handleAddTransaction: PropTypes.func.isRequired,
