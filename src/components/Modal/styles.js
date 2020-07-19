@@ -8,7 +8,7 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   background: #fff;
-  padding: 10px;
+  padding: 18px 8px;
 
   font-size: 1rem;
 
@@ -34,7 +34,7 @@ export const Container = styled.div`
     }
   }
 
-  @media(min-width: 425px) {
+  @media(min-width: 375px) {
     form {
       width: 320px;
     }
@@ -79,7 +79,7 @@ export const Container = styled.div`
 export const SubmitButton = styled.button`
   background: ${props => props.disabled ? '#999999' : '#0f79af'};
   box-shadow: ${props => props.disabled ? '0 0 22px #777777 inset' : '0 0 22px #001a66 inset'};
-  padding: 8px;
+  padding: 16px 8px;
   width: 280px;
   margin: 20px auto 0;
   display: block;
@@ -89,7 +89,7 @@ export const SubmitButton = styled.button`
       background: ${props => props.disabled ? '' : '#79b8f3'};
     }
 
-  @media(min-width: 425px) {
+  @media(min-width: 375px) {
     width: 320px;
   }
 
@@ -192,6 +192,22 @@ export const DateInput = styled.div`
         +label {
           color: #0f79af;
         }
+      }
+    }
+  }
+
+  @media(min-width: 375px) {
+    > label {
+      input {
+        width: 300px;
+      }
+    }
+  }
+
+  @media(min-width: 768px) {
+    > label {
+      input {
+        width: 580px;
       }
     }
   }

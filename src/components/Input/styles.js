@@ -11,7 +11,7 @@ export const Container = styled.section`
     box-shadow: 0 0 22px #001a66 inset;
     width: 280px;
     padding: 18px;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     margin-top: 10px;
     font-weight: bold;
 
@@ -26,7 +26,7 @@ export const Container = styled.section`
     padding: 18px;
 
     &::placeholder {
-      font-size: 0.7rem;
+      font-size: 0.9rem;
     }
   }
 
