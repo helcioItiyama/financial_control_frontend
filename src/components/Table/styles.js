@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.table`
   padding: 10px;
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   min-width: 200px;
   width: 100%;
   border-collapse: separate;
@@ -37,7 +37,6 @@ export const Container = styled.table`
   }
 
   @media(min-width: 768px) {
-    font-size: 0.9rem;
     border-spacing: 0px 15px;   
   }
 
@@ -74,7 +73,7 @@ export const Row = styled.tr `
   box-shadow: ${props => props.isCashIn ? '0px 0px 30px #4b8162 inset' : '0px 0px 30px #f08080 inset'};
   width: 20px;
   td {
-    padding: 4px;
+    padding: 16px 4px;
     text-align: center;
     width: 2px;
    
@@ -112,7 +111,7 @@ export const Row = styled.tr `
           }
 
           &:last-child {
-            padding-left: 10px;
+            padding-left: 15px;
           }
         }
       }
@@ -146,6 +145,7 @@ export const Row = styled.tr `
 
   @media(min-width: 1024px) {
     td {
+        padding: 4px;
       &:nth-child(2) {
         padding-left: 60px;
         > p {

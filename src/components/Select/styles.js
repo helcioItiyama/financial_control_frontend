@@ -9,7 +9,7 @@ export const Container = styled.div`
   >button {
     background: #0f79af;
     box-shadow: 0 0 22px #001a66 inset;
-    padding: 4px 8px;
+    padding: 16px;
   
 
     &:hover {
@@ -19,7 +19,7 @@ export const Container = styled.div`
   }
 
   select {
-    padding: 6px 0px 6px 60px;
+    padding: 16px 0px 16px 60px;
     width:200px;
   }
 
@@ -28,7 +28,7 @@ export const Container = styled.div`
 
     select {
       width: 260px;
-      padding: 6px 0px 6px 90px;
+      padding:16px 0px 16px 90px;
     }
   }
 
@@ -37,7 +37,7 @@ export const Container = styled.div`
 
     select {
       width: 300px;
-      padding: 6px 0px 6px 110px;
+      padding: 16px 0px 16px 110px;
     }
   }
 

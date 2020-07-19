@@ -10,7 +10,7 @@ export const Container = styled.section`
     background: #0f79af;
     box-shadow: 0 0 22px #001a66 inset;
     width: 280px;
-    padding: 10px;
+    padding: 18px;
     font-size: 0.7rem;
     margin-top: 10px;
     font-weight: bold;
@@ -23,7 +23,7 @@ export const Container = styled.section`
 
   input {
     width: 280px;
-    padding: 6px;
+    padding: 18px;
 
     &::placeholder {
       font-size: 0.7rem;

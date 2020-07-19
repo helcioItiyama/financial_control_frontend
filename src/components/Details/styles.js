@@ -13,7 +13,7 @@ export const Container = styled.div`
   gap: 8px;
   
   > p {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: bold;
   }
 
@@ -26,7 +26,7 @@ export const Container = styled.div`
     margin: 20px auto;
 
     >p {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
     }
   }
 
@@ -34,7 +34,7 @@ export const Container = styled.div`
     width: 600px;
 
     >p {
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
   }
 
