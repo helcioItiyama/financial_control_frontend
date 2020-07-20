@@ -142,6 +142,7 @@ function Modal({handleClose, edit, loadTransactions, onRef}) {
                 value={value} 
                 onChange={(event) => setValue(event.target.value)}
                 min="0"
+                step="0.10"
               />
               <label htmlFor="value">Valor:</label>  
             </div>
